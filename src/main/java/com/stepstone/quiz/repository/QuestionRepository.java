@@ -7,4 +7,6 @@ import java.util.List;
  */
 public interface QuestionRepository {
     List<String> findAll();
+    String findAnswer(String question);
+    List<String> findByType(String type);
 }

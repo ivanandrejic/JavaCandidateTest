@@ -7,4 +7,8 @@ import java.util.List;
  */
 public interface QuestionService {
     List<String> getAll();
+
+    List<String> getByType(String type);
+
+    Boolean checkAnswer(String question, String answer);
 }

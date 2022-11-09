@@ -1,6 +1,7 @@
 package com.stepstone.quiz.service;
 
 import com.stepstone.quiz.repository.QuestionRepository;
+import com.stepstone.quiz.repository.QuizModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,7 +26,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAll();
     }
 
-    public List<String> getByType(String type) {
+    public List<String> getByType(QuizModel.QuizType type) {
         return questionRepository.findByType(type);
     }
 
@@ -33,6 +34,11 @@ public class QuestionServiceImpl implements QuestionService {
         if (!StringUtils.hasLength(question) || !StringUtils.hasLength(answer)) {
             return false;
         }
-        return Objects.equals(questionRepository.findAnswer(question), answer);
+        String trueAnswer = questionRepository.findAnswer(question);
+        if (!StringUtils.hasLength(trueAnswer)) {
+//            throw exception?
+            return false;
+        }
+        return Objects.equals(trueAnswer, answer);
     }
 }

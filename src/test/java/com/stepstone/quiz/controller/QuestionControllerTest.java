@@ -1,5 +1,6 @@
 package com.stepstone.quiz.controller;
 
+import com.stepstone.quiz.repository.QuizModel;
 import com.stepstone.quiz.service.QuestionService;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class QuestionControllerTest {
 
     public static final String SOME_QUESTION = "What is the capital of Cuba?";
     public static final String TRUE_ANSWER = "Havana";
-    public static final String TEST_TYPE = "Geography";
+    public static final QuizModel.QuizType TEST_TYPE = QuizModel.QuizType.GEOGRAPHY;
 
     @Test
     public void getQuestions_should_return_questions() {

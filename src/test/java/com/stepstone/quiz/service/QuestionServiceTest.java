@@ -61,6 +61,20 @@ public class QuestionServiceTest {
     }
 
     @Test
+    public void missingQuestion_should_return_false(){
+        // given
+        final var mockQuestionRepository = mock(QuestionRepository.class);
+        final var questionService = new QuestionServiceImpl(mockQuestionRepository);
+
+        // when
+        when(mockQuestionRepository.findAnswer(SOME_QUESTION)).thenReturn(TRUE_ANSWER);
+        final var isTrueAnswer = questionService.checkAnswer("wrongQuestion", TRUE_ANSWER);
+
+        // then
+        assertThat(isTrueAnswer, is(false));
+    }
+
+    @Test
     public void getByType_should_return_questions(){
         // given
         final var mockQuestionRepository = mock(QuestionRepository.class);

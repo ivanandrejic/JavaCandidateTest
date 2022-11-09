@@ -1,5 +1,6 @@
 package com.stepstone.quiz.controller;
 
+import com.stepstone.quiz.repository.QuizModel;
 import com.stepstone.quiz.service.QuestionService;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/{type}")
-    public List<String> getByType(@RequestParam(name = "type") String type){
+    public List<String> getByType(@PathVariable (name = "type") QuizModel.QuizType type){
         return questionService.getByType(type);
     }
 

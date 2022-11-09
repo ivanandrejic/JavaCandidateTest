@@ -1,6 +1,5 @@
 package com.stepstone.quiz.repository;
 
-import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,11 +13,11 @@ import java.util.stream.Collectors;
 public class QuestionRepositoryImpl implements QuestionRepository {
 
     static final List<QuizModel> data = List.of(
-            new QuizModel("What is the capital of Cuba?", "Havana", "Geography"),
-            new QuizModel("What is the capital of France?", "Paris", "Geography"),
-            new QuizModel("What is the capital of Poland?", "Warsaw", "Geography"),
-            new QuizModel("What is the capital of Germany?", "Berlin", "Geography"),
-            new QuizModel("What is the hardest natural substance on Earth?", "Diamond", "Science")
+            new QuizModel("What is the capital of Cuba?", "Havana", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel("What is the capital of France?", "Paris", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel("What is the capital of Poland?", "Warsaw", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel("What is the capital of Germany?", "Berlin", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel("What is the hardest natural substance on Earth?", "Diamond", QuizModel.QuizType.SCIENCE)
     );
 
     public List<String> findAll() {
@@ -27,7 +26,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<String> findByType(final String type) {
+    public List<String> findByType(final QuizModel.QuizType type) {
         return data.stream()
                 .filter(quizModel ->  Objects.equals(quizModel.getType(), type))
                 .map(QuizModel::getQuestion)
@@ -42,17 +41,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 .orElse(null);
     }
 
-    @Getter
-    private static class QuizModel {
-        private final String question;
-        private final String answer;
-        private final String type;
 
-        private QuizModel(String question, String answer, String type) {
-            this.question = question;
-            this.answer = answer;
-            this.type = type;
-        }
-    }
 
 }

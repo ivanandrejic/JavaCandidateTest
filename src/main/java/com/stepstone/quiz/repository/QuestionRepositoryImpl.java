@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
 
-    private static final List<QuizModel> data = List.of(
+    static final List<QuizModel> data = List.of(
             new QuizModel("What is the capital of Cuba?", "Havana", "Geography"),
             new QuizModel("What is the capital of France?", "Paris", "Geography"),
             new QuizModel("What is the capital of Poland?", "Warsaw", "Geography"),

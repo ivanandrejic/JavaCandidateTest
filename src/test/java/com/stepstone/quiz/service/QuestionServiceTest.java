@@ -25,10 +25,11 @@ public class QuestionServiceTest {
         final var questionService = new QuestionServiceImpl(mockQuestionRepository);
 
         // when
-        when(mockQuestionRepository.findAll()).thenReturn(List.of(SOME_QUESTION));
+        when(mockQuestionRepository.findAll()).thenReturn(List.of(QUIZ_MODEL));
         final var questions = questionService.getAll();
 
         // then
+        assertThat(questions, is(notNullValue()));
         assertThat(questions, is(hasSize(1)));
     }
 
@@ -39,39 +40,12 @@ public class QuestionServiceTest {
         final var questionService = new QuestionServiceImpl(mockQuestionRepository);
 
         // when
-        when(mockQuestionRepository.findAnswer(SOME_QUESTION)).thenReturn(TRUE_ANSWER);
-        final var isTrueAnswer = questionService.checkAnswer(SOME_QUESTION, TRUE_ANSWER);
+        when(mockQuestionRepository.findByQuestionIdAndAnswer(1L, TRUE_ANSWER)).thenReturn(QUIZ_MODEL);
+        final var quizDTO = questionService.getByAnswer(1L, TRUE_ANSWER);
 
         // then
-        assertThat(isTrueAnswer, is(true));
-    }
-
-    @Test
-    public void badRequest_should_return_false(){
-        // given
-        final var mockQuestionRepository = mock(QuestionRepository.class);
-        final var questionService = new QuestionServiceImpl(mockQuestionRepository);
-
-        // when
-        when(mockQuestionRepository.findAnswer(SOME_QUESTION)).thenReturn(TRUE_ANSWER);
-        final var isTrueAnswer = questionService.checkAnswer(null, null);
-
-        // then
-        assertThat(isTrueAnswer, is(false));
-    }
-
-    @Test
-    public void missingQuestion_should_return_false(){
-        // given
-        final var mockQuestionRepository = mock(QuestionRepository.class);
-        final var questionService = new QuestionServiceImpl(mockQuestionRepository);
-
-        // when
-        when(mockQuestionRepository.findAnswer(SOME_QUESTION)).thenReturn(TRUE_ANSWER);
-        final var isTrueAnswer = questionService.checkAnswer("wrongQuestion", TRUE_ANSWER);
-
-        // then
-        assertThat(isTrueAnswer, is(false));
+        assertThat(quizDTO, is(notNullValue()));
+        assertThat(quizDTO.getId(), is(1L));
     }
 
     @Test
@@ -81,7 +55,7 @@ public class QuestionServiceTest {
         final var questionService = new QuestionServiceImpl(mockQuestionRepository);
 
         // when
-        when(mockQuestionRepository.findByType(TEST_TYPE)).thenReturn(List.of(SOME_QUESTION));
+        when(mockQuestionRepository.findByType(TEST_TYPE)).thenReturn(List.of(QUIZ_MODEL));
         final var questions = questionService.getByType(TEST_TYPE);
 
         // then

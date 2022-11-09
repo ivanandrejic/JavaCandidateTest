@@ -2,7 +2,8 @@ package com.stepstone.quiz.repository;
 
 import org.junit.jupiter.api.Test;
 
-import static com.stepstone.quiz.controller.QuestionControllerTest.*;
+import static com.stepstone.quiz.controller.QuestionControllerTest.TEST_TYPE;
+import static com.stepstone.quiz.controller.QuestionControllerTest.TRUE_ANSWER;
 import static com.stepstone.quiz.repository.QuestionRepositoryImpl.data;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -48,9 +49,9 @@ public class QuestionRepositoryTest {
         final var questionRepository = new QuestionRepositoryImpl();
 
         // when
-        final var answer = questionRepository.findAnswer(SOME_QUESTION);
+        final var quizModel = questionRepository.findByQuestionIdAndAnswer(1L, TRUE_ANSWER);
 
         // then
-        assertThat(answer, is(TRUE_ANSWER));
+        assertThat(quizModel, is(notNullValue()));
     }
 }

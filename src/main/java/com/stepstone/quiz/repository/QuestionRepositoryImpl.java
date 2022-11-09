@@ -13,30 +13,26 @@ import java.util.stream.Collectors;
 public class QuestionRepositoryImpl implements QuestionRepository {
 
     static final List<QuizModel> data = List.of(
-            new QuizModel("What is the capital of Cuba?", "Havana", QuizModel.QuizType.GEOGRAPHY),
-            new QuizModel("What is the capital of France?", "Paris", QuizModel.QuizType.GEOGRAPHY),
-            new QuizModel("What is the capital of Poland?", "Warsaw", QuizModel.QuizType.GEOGRAPHY),
-            new QuizModel("What is the capital of Germany?", "Berlin", QuizModel.QuizType.GEOGRAPHY),
-            new QuizModel("What is the hardest natural substance on Earth?", "Diamond", QuizModel.QuizType.SCIENCE)
+            new QuizModel(1L, "What is the capital of Cuba?", "Havana", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel(2L, "What is the capital of France?", "Paris", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel(3L, "What is the capital of Poland?", "Warsaw", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel(4L, "What is the capital of Germany?", "Berlin", QuizModel.QuizType.GEOGRAPHY),
+            new QuizModel(5L, "What is the hardest natural substance on Earth?", "Diamond", QuizModel.QuizType.SCIENCE)
     );
 
-    public List<String> findAll() {
+    public List<QuizModel> findAll() {
+        return data;
+    }
+
+    public List<QuizModel> findByType(final QuizModel.QuizType type) {
         return data.stream()
-                .map(QuizModel::getQuestion)
+                .filter(quizModel ->  quizModel.getType() == type)
                 .collect(Collectors.toList());
     }
 
-    public List<String> findByType(final QuizModel.QuizType type) {
+    public QuizModel findByQuestionIdAndAnswer(final Long questionId, final String answer) {
         return data.stream()
-                .filter(quizModel ->  Objects.equals(quizModel.getType(), type))
-                .map(QuizModel::getQuestion)
-                .collect(Collectors.toList());
-    }
-
-    public String findAnswer(final String question) {
-        return data.stream()
-                .filter(quizModel -> Objects.equals(quizModel.getQuestion(), question))
-                .map(QuizModel::getAnswer)
+                .filter(quizModel -> Objects.equals(quizModel.getId(), questionId) && Objects.equals(quizModel.getAnswer(), answer))
                 .findAny()
                 .orElse(null);
     }
